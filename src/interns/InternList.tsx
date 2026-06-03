@@ -1,12 +1,20 @@
-import { BooleanField, Datagrid, DeleteButton, EditButton, FunctionField, List, NumberField, ReferenceField, TextField } from 'react-admin';
+import { BooleanField, BooleanInput, CreateButton, Datagrid, DeleteButton, EditButton, FunctionField, List, NumberField, ReferenceField, TextField, TextInput, TopToolbar } from 'react-admin';
+import { QuickInternCreateButton } from './QuickInternCreateButton';
 
 const internFilters = [
-  <TextField source="department" label="Département" key="department" />,
-  <BooleanField source="isRemunerate" label="Rémunéré" key="isRemunerate" />,
+  <TextInput source="department" label="Département" key="department" />,
+  <BooleanInput source="isRemunerate" label="Rémunéré" key="isRemunerate" />,
 ];
 
+const InternListActions = () => (
+  <TopToolbar>
+    <QuickInternCreateButton />
+    <CreateButton />
+  </TopToolbar>
+);
+
 export const InternList = () => (
-  <List perPage={5} filters={internFilters}>
+  <List perPage={5} filters={internFilters} actions={<InternListActions />}>
     <Datagrid rowClick="show">
       <FunctionField label="Nom complet" render={(record) => `${record.firstName} ${record.lastName}`} />
       <TextField source="email" label="Email" />
