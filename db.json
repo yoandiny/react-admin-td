@@ -14,7 +14,27 @@
       "email": "clara@company.com",
       "department": "RH",
       "salary": 2600,
-      "active": false
+      "active": true
+    }
+  ],
+  "interns": [
+    {
+      "id": 1,
+      "firstName": "Emma Lefèvre",
+      "email": "emma@company.com",
+      "isPaid": true,
+      "referentId": 3,
+      "active": true,
+      "salary": null
+    },
+    {
+      "id": 2,
+      "firstName": "Lucas Moreau",
+      "email": "lucas@company.com",
+      "department": "Marketing",
+      "isPaid": false,
+      "referentId": 2,
+      "active": true
     }
   ]
 }
