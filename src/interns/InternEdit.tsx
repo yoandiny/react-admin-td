@@ -1,35 +1,40 @@
-import { Edit, SimpleForm, TextInput, BooleanInput, ReferenceInput, SelectInput, FormDataConsumer, NumberInput } from 'react-admin';
+import { BooleanInput, Edit, FormDataConsumer, NumberInput, ReferenceInput, SelectInput, SimpleForm, TextInput, email, required, useRecordContext } from 'react-admin';
+
+const InternTitle = () => {
+  const record = useRecordContext();
+  return record ? <span>Modifier : {record.firstName} {record.lastName}</span> : null;
+};
 
 export const InternEdit = () => {
   return (
-    <Edit>
+    <Edit title={<InternTitle />}>
       <SimpleForm>
-        <TextInput source="firstName" label="Prénom" />
-        <TextInput source="email" label="Email" type="email" />
-        <TextInput source="department" label="Département" />
+        <TextInput source="firstName" label="Prénom" validate={required()} />
+        <TextInput source="lastName" label="Nom" validate={required()} />
+        <TextInput source="email" label="Email" type="email" validate={[required(), email()]} />
+        <TextInput source="department" label="Département" validate={required()} />
         <FormDataConsumer>
           {({ formData }) => (
             <ReferenceInput
-              source="referentId"
+              source="managerId"
               reference="employees"
-              label="Référent (Actif, même département)"
+              label="Manager"
               filter={
                 formData.department
                   ? { active: true, department: formData.department }
                   : { active: true }
               }
             >
-              <SelectInput optionText="firstName" />
+              <SelectInput optionText={(record) => `${record.firstName} ${record.lastName}`} validate={required()} />
             </ReferenceInput>
           )}
         </FormDataConsumer>
-        <BooleanInput source="isPaid" label="Rémunéré" />
+        <BooleanInput source="isRemunerate" label="Rémunéré" />
         <FormDataConsumer>
-          {({ formData }) => formData.isPaid && (
-            <NumberInput source="salary" label="Salaire" />
+          {({ formData }) => formData.isRemunerate && (
+            <NumberInput source="salary" label="Rémunération" validate={required()} />
           )}
         </FormDataConsumer>
-        <BooleanInput source="active" label="Actif" defaultValue={true} />
       </SimpleForm>
     </Edit>
   );
